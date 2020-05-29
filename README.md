@@ -6,16 +6,6 @@ Light-weight docker managing multiple machines, in particular, to develop Machin
 - Install nvidia-docker on every machine.
 ## Installation
 - git clone this repository on master machine.
-- Install by ``` python setup.py ```
-    - ```setup.py``` does
-        - Sharing public keys
-        - Merging the images on master
-            - It requires that every image name is distinct.
-        - Checking containers
-            - Every container need to be removed before starting.
-        - Adding environment variables
-            - ```export PATH=<LOCATION>:$PATH```
-            - ```export DIST_DOCKER_PATH=<LOCATION>```
 - Write ```info.json``` based on ```info_template.json```
     - master and workers information
     - instance type that want to use
@@ -50,6 +40,16 @@ Light-weight docker managing multiple machines, in particular, to develop Machin
   ]
 }
 ```
+- Install by ``` python setup.py ```
+    - ```setup.py``` does
+        - Sharing public keys
+        - Merging the images on master
+            - It requires that every image name is distinct.
+        - Checking containers
+            - Every container need to be removed before starting.
+        - Adding environment variables
+            - ```export PATH=<LOCATION>:$PATH```
+            - ```export DIST_DOCKER_PATH=<LOCATION>```
 
 ## Commands
 - It doesn't cover every commands of docker, but we tried out to implement the useful commands for ML developments.
