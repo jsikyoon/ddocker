@@ -52,7 +52,7 @@ Light-weight docker managing multiple machines, in particular, to develop Machin
             - ```export DIST_DOCKER_PATH=<LOCATION>```
 
 ## Commands
-- It doesn't cover every commands of docker, but we tried out to implement the useful commands for ML developments.
+- It doesn't cover every command of docker, but we tried out to implement the useful commands for ML developments.
 ```
 $ddocker --help
 
@@ -73,7 +73,7 @@ Commands:
   ddocker commit <CONTAINER_NAME> <IMAGE_NAME>    Commit container
   ```
   
-  - Almost commands on above list work similar to docker, but ```create``` makes container by searching not used resources on the cluster. Bellowed is example.
+  - Almost commands on above list work similar to docker, but ```create``` makes container by searching not used resources on the cluster. Bellowed is an example.
 ```
 $ddocker create
 Service types.
