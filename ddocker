@@ -1,0 +1,154 @@
+#!/bin/bash
+
+command=$1
+
+# dist_docker ps -a/ps --all/ps
+if [ "${command}" = "ps" ]; then
+  shift
+  if [ "$1" = "-a" ]; then
+    python $DIST_DOCKER_PATH/dist_docker_ps.py -a
+  elif [ "$1" = "--all" ]; then
+    python $DIST_DOCKER_PATH/dist_docker_ps.py -a
+  elif [ "$1" = "" ]; then
+    python $DIST_DOCKER_PATH/dist_docker_ps.py
+  else
+    echo "ddocker ps acceps no arguments. Please do ddocker --help"
+  fi
+
+# dist_docker images
+elif [ "${command}" = "images" ]; then
+  shift
+  if [ "$1" = "" ]; then
+    python $DIST_DOCKER_PATH/dist_docker_images.py
+  else
+    echo "ddocker images acceps no arguments. Please do ddocker --help"
+  fi
+
+# dist_docker inspect <CONTAINER_NAME>
+elif [ "${command}" = "inspect" ]; then
+  shift
+  while true; do
+    [ $# -eq 0 ] && break
+    python $DIST_DOCKER_PATH/dist_docker_inspect.py --cont $1
+    shift
+  done
+
+# dist_docker exec <CONTAINER_NAME>
+elif [ "${command}" = "exec" ]; then
+  shift
+  python $DIST_DOCKER_PATH/dist_docker_exec.py --cont $1
+
+# dist_docker start <CONTAINER_NAME>
+elif [ "${command}" = "start" ]; then
+  shift
+  while true; do
+    [ $# -eq 0 ] && break
+    python $DIST_DOCKER_PATH/dist_docker_start.py --cont $1
+    shift
+  done
+
+# dist_docker stop <CONTAINER_NAME>
+elif [ "${command}" = "stop" ]; then
+  shift
+  while true; do
+    [ $# -eq 0 ] && break
+    python $DIST_DOCKER_PATH/dist_docker_stop.py --cont $1
+    shift
+  done
+
+# dist_docker rm <CONTAINER_NAME>
+elif [ "${command}" = "rm" ]; then
+  shift
+  while true; do
+    [ $# -eq 0 ] && break
+    python $DIST_DOCKER_PATH/dist_docker_rm.py --cont $1
+    shift
+  done
+
+# dist_docker nvidia-smi <HOST_NAME>
+elif [ "${command}" = "nvidia-smi" ]; then
+  shift
+  while true; do
+    [ $# -eq 0 ] && break
+    python $DIST_DOCKER_PATH/dist_nvidia_smi.py --host $1
+    shift
+  done
+
+# dist_docker rmi <IMAGE_NAME>
+elif [ "${command}" = "rmi" ]; then
+  shift
+  while true; do
+    [ $# -eq 0 ] && break
+    python $DIST_DOCKER_PATH/dist_docker_rmi.py --img $1
+    shift
+  done
+
+# dist_docker create
+elif [ "${command}" = "create" ]; then
+  shift
+  if [ "$1" = "" ]; then
+    python $DIST_DOCKER_PATH/dist_docker_create.py
+  else
+    echo "ddocker create acceps no arguments. Please do ddocker --help"
+  fi
+
+# dist_docker commit <CONTAINER_NAME> <NEW_IMAGE_NAME>
+elif [ "${command}" = "commit" ]; then
+  arg1=$2
+  arg2=$3
+  if [ "$4" = "" ]; then
+    python $DIST_DOCKER_PATH/dist_docker_commit.py --cont $arg1 --new_img $arg2
+  else
+    echo "ddocker commit acceps no arguments. Please do ddocker --help"
+  fi
+
+# help
+elif [ "${command}" = "--help" ]; then
+  if [ "$2" = "" ]; then
+    echo ""
+    echo "Usage: ddocker COMMAND [ARGUMENTS]"
+    echo ""
+    echo "Commands:"
+    echo "  ddocker ps                                      List-up running containers"
+    echo "  ddocker ps [-a,--all]                           List-up every container"
+    echo "  ddocker images                                  List-up images"
+    echo "  ddocker inspect <CONTAINER_NAME>                Container details"
+    echo "  ddocker exec <CONTAINER_NAME>                   Access in container"
+    echo "  ddocker start <CONTAINER_NAME>                  Start container"
+    echo "  ddocker stop <CONTAINER_NAME>                   Stop container"
+    echo "  ddocker rm <CONTAINER_NAME>                     Remove container"
+    echo "  ddocker rmi <IMAGE_NAME>                        Remove image"
+    echo "  ddocker nvidia-smi <HOST_NAME>                  Show GPU usage"
+    echo "  ddocker create                                  Create/start container with selected types"
+    echo "  ddocker commit <CONTAINER_NAME> <IMAGE_NAME>    Commit container"
+  else
+    echo "ddocker --help acceps no arguments. Please do ddocker --help"
+  fi
+
+# help
+elif [ "${command}" = "-h" ]; then
+  if [ "$2" = "" ]; then
+    echo ""
+    echo "Usage: ddocker COMMAND [ARGUMENTS]"
+    echo ""
+    echo "Commands:"
+    echo "  ddocker ps                                      List-up running containers"
+    echo "  ddocker ps [-a,--all]                           List-up every container"
+    echo "  ddocker images                                  List-up images"
+    echo "  ddocker inspect <CONTAINER_NAME>                Container details"
+    echo "  ddocker exec <CONTAINER_NAME>                   Access in container"
+    echo "  ddocker start <CONTAINER_NAME>                  Start container"
+    echo "  ddocker stop <CONTAINER_NAME>                   Stop container"
+    echo "  ddocker rm <CONTAINER_NAME>                     Remove container"
+    echo "  ddocker rmi <IMAGE_NAME>                        Remove image"
+    echo "  ddocker nvidia-smi <HOST_NAME>                  Show GPU usage"
+    echo "  ddocker create                                  Create/start container with selected types"
+    echo "  ddocker commit <CONTAINER_NAME> <IMAGE_NAME>    Commit container"
+  else
+    echo "ddocker -h acceps no arguments. Please do ddocker --help"
+  fi
+
+# except
+else
+  echo "Not valide command. Please do ddocker --help"
+fi

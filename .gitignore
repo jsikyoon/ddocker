@@ -1,3 +1,7 @@
+# information
+info.json
+init_worker_info.json
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
