@@ -91,10 +91,16 @@ def search_ports(num_port, start_port, cont_details):
   for i in range(num_port):
     while True:
       try:
-        res = subprocess.check_output(
-          'ssh '+user+'@'+host+
-            " sudo netstat -anp |grep ':"+str(_port_num)+" '",
-          shell=True).decode('utf-8')
+        if user == 'root':
+          res = subprocess.check_output(
+            'ssh '+user+'@'+host+
+              " netstat -anp |grep ':"+str(_port_num)+" '",
+            shell=True).decode('utf-8')
+        else:
+          res = subprocess.check_output(
+            'ssh '+user+'@'+host+
+              " sudo netstat -anp |grep ':"+str(_port_num)+" '",
+            shell=True).decode('utf-8')
         _port_num += 1
       except:
         port_nums.append(_port_num)
@@ -149,7 +155,8 @@ def sync_image(img_name, cont_details, master):
     os.system('ssh '+user+'@'+host+' docker load -i /tmp/'+file_name)
 
 if __name__ == "__main__":
-  dist_docker_path = os.environ['DIST_DOCKER_PATH']
+  dist_docker_path = os.path.abspath(__file__).split('/')[:-1]
+  dist_docker_path = '/'.join(dist_docker_path) + '/'
   # It requires servers.json
   with open(os.path.join(dist_docker_path,'info.json')) as json_file:
     json_data = json.load(json_file)

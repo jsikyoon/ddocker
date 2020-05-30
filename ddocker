@@ -150,5 +150,5 @@ elif [ "${command}" = "-h" ]; then
 
 # except
 else
-  echo "Not valide command. Please do ddocker --help"
+  echo "Not valid command. Please do ddocker --help"
 fi

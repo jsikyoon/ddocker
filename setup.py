@@ -2,7 +2,8 @@ import os
 import json
 import subprocess
 
-dist_docker_path = os.environ['DIST_DOCKER_PATH']
+dist_docker_path = os.path.abspath(__file__).split('/')[:-1]
+dist_docker_path = '/'.join(dist_docker_path) + '/'
 # It requires servers.json
 with open(os.path.join(dist_docker_path,'info.json')) as json_file:
   json_data = json.load(json_file)
@@ -58,15 +59,5 @@ for i in range(len(workers)):
     if len(output) > 0:
       print('Please remove entire containers before starting.')
       exit(1)
-
-# Add PATHs
-path = os.path.abspath(__file__).split('/')[:-1]
-path = '/'.join(path) + '/'
-print('Add PATH: ',"export PATH="+path+":$PATH")
-os.system("export PATH="+path+":$PATH")
-os.system("echo 'export PATH="+path+":$PATH' >> ~/.bashrc")
-print('Add PATH: ',"export DIST_DOCKER_PATH="+path)
-os.system("export DIST_DOCKER_PATH="+path)
-os.system("echo 'export DIST_DOCKER_PATH="+path+"' >> ~/.bashrc")
 
 print('Setting is Done!!')

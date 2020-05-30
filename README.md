@@ -1,13 +1,17 @@
-# ddocker
+# Distributed Docker (ddocker)
 
-Light-weight docker managing multiple machines, in particular, to develop Machine Learning with GPUs.
+To manage multiple machines docker, we implemented simple and light-weight version of distributed docker. 
+
+It supports commited image sharing between machines and creates container on a machine having available resource.
 
 ## Pre-requisites
 - Install nvidia-docker on every machine.
+- Install netstat on every machine to search available port number for allocation to containers.
 ## Installation
 - git clone this repository on master machine.
 - Write ```info.json``` based on ```info_template.json```
     - master and workers information
+        - The users need to have authentification to do ```sudo``` or are ```root```
     - instance type that want to use
         - The type value format is ```[cpu num, memory size(GB), 'gpu_model1,gpu_model2']```
     - The number of CPU and memory size in ```buffer``` are not used anytime.
@@ -47,9 +51,17 @@ Light-weight docker managing multiple machines, in particular, to develop Machin
             - It requires that every image name is distinct.
         - Checking containers
             - Every container need to be removed before starting.
-        - Adding environment variables
-            - ```export PATH=<LOCATION>:$PATH```
-            - ```export DIST_DOCKER_PATH=<LOCATION>```
+- Add the installed location to PATH 
+```export PATH=<ddocker_LOCATION>:$PATH```
+```export DIST_DOCKER_PATH=<ddocker_LOCATION>```
+- If you are user, please ask administrator to share authorized_keys to connect other machines.
+- If you want to usr ddocker on other machines including one of workers, please do
+    - Git clone this repository
+    - Copy info.json from where you installed
+    - Copy authorized_keys to connect
+    - Add the location to PATH 
+    ```export PATH=<ddocker_LOCATION>:$PATH```
+```export DIST_DOCKER_PATH=<ddocker_LOCATION>```
 
 ## Commands
 - It doesn't cover every command of docker, but we tried out to implement the useful commands for ML developments.
