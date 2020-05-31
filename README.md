@@ -8,7 +8,7 @@ It supports commited image sharing between machines and creates container on a m
 - Install nvidia-docker on every machine.
 - Install netstat on every machine to search available port number for allocation to containers.
 ## Installation
-- git clone this repository on master machine.
+- git clone this repository.
 - Write ```info.json``` based on ```info_template.json```
     - master and workers information
         - The users need to have authentification to do ```sudo``` or are ```root```
@@ -55,7 +55,7 @@ It supports commited image sharing between machines and creates container on a m
 ```export PATH=<ddocker_LOCATION>:$PATH```
 ```export DIST_DOCKER_PATH=<ddocker_LOCATION>```
 - If you are user, please ask administrator to share authorized_keys to connect other machines.
-- If you want to usr ddocker on other machines including one of workers, please do
+- If you want to usr ddocker on other machines including master or one of workers, please do
     - Git clone this repository
     - Copy info.json from where you installed
     - Copy authorized_keys to connect
