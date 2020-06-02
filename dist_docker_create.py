@@ -91,16 +91,10 @@ def search_ports(num_port, start_port, cont_details):
   for i in range(num_port):
     while True:
       try:
-        if user == 'root':
-          res = subprocess.check_output(
-            'ssh '+user+'@'+host+
-              " netstat -anp |grep ':"+str(_port_num)+" '",
-            shell=True).decode('utf-8')
-        else:
-          res = subprocess.check_output(
-            'ssh '+user+'@'+host+
-              " sudo netstat -anp |grep ':"+str(_port_num)+" '",
-            shell=True).decode('utf-8')
+        res = subprocess.check_output(
+          'ssh '+user+'@'+host+
+            " netstat -anp |grep ':"+str(_port_num)+" '",
+          shell=True).decode('utf-8')
         _port_num += 1
       except:
         port_nums.append(_port_num)
@@ -255,8 +249,10 @@ if __name__ == "__main__":
   command += port_details
   if gpu_ids != '':
     command += \
-      '--device=/dev/nvidiactl --device=/dev/nvidia-uvm --device=/dev/nvidia'+\
-      gpu_ids[0]+' -e NVIDIA_VISIBLE_DEVICES='+gpu_ids+' --runtime nvidia '
+      '--device=/dev/nvidiactl --device=/dev/nvidia-uvm --runtime nvidia '
+    for _gpu_id in gpu_ids.split(','):
+      command += '--device=/dev/nvidia'+_gpu_id+' '
+    command += '-e NVIDIA_VISIBLE_DEVICES='+gpu_ids+' '
   command += '--memory='+mem+' '
   command += '--cpuset-cpus='+cpuset_cpus+' '
   command += '-ti --name '+cont_name+' '

@@ -149,16 +149,21 @@ def summary():
       sum_workers[i]['memory']['used_size'] += mem_gb
 
       # GPU
-      if details['Config']['Env'][0].split('=')[0] == 'NVIDIA_VISIBLE_DEVICES':
-        gpus = details['Config']['Env'][0].split('=')[1].split(',')
-        gpus = list(map(int, gpus))
-        gpu_models = []
-        for _gpu in gpus:
-          gpu_models.append(sum_workers[i]['gpu']['models'][_gpu])
-          sum_workers[i]['gpu']['gpu_usage'][_gpu] = _output
-        _sum_containers['GPUS'] = count_duplicated(gpu_models)
-      else:
+      try:
+        devices = details['HostConfig']['Devices']
+        _PathOnHost = []
+        for _dev_idx in range(len(devices)):
+          _PathOnHost.append(devices[_dev_idx]['PathOnHost'])
+      except:
+        _PathOnHost = []
+      gpu_models = []
+      for _gpu_idx in range(sum_workers[i]['gpu']['total_num']):
+        if '/dev/nvidia'+str(_gpu_idx) in _PathOnHost:
+          gpu_models.append(sum_workers[i]['gpu']['models'][_gpu_idx])
+      if len(gpu_models) == 0:
         _sum_containers['GPUS'] = ''
+      else:
+        _sum_containers['GPUS'] = count_duplicated(gpu_models)
 
       sum_containers.append(_sum_containers)
 

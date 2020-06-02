@@ -11,7 +11,6 @@ It supports commited image sharing between machines and creates container on a m
 - git clone this repository.
 - Write ```info.json``` based on ```info_template.json```
     - master and workers information
-        - The users need to have authentification to do ```sudo``` or are ```root```
     - instance type that want to use
         - The type value format is ```[cpu num, memory size(GB), 'gpu_model1,gpu_model2']```
     - The number of CPU and memory size in ```buffer``` are not used anytime.
