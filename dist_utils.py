@@ -85,7 +85,9 @@ def port_pretty(port_binding):
   for key in port_binding.keys():
     _res_str = []
     for i in range(len(port_binding[key])):
-      _res_str.append(port_binding[key][i]['HostIp']+':'+port_binding[key][i]['HostPort'])
+      if port_binding[key][i]['HostIp'] == '':
+        host_ip = '0.0.0.0'
+      _res_str.append(host_ip+':'+port_binding[key][i]['HostPort'])
     _res_str = ','.join(_res_str)
     res_str += _res_str+'->'+key
 
@@ -132,7 +134,7 @@ def summary():
       _sum_containers['image'] = details['Config']['Image']
       _sum_containers['running'] = details['State']['Running']
       _sum_containers['created'] = details['Created'].split('.')[0][2:]
-      port_binding = details['NetworkSettings']['Ports']
+      port_binding = details['HostConfig']['PortBindings']
       _sum_containers['ports'] = port_pretty(port_binding)
       
       # CPU
