@@ -1,6 +1,7 @@
 import os
 import json
 import argparse
+from datetime import datetime
 from dist_utils import summary
 from dist_docker_create import get_img_list
 
@@ -11,6 +12,11 @@ parser.add_argument('--new_img', type=str, default='aaa', help='the new name')
 args = parser.parse_args()
 cont_name = args.cont
 new_img_name = args.new_img
+
+# Make tag when no tag:
+if not ':' in new_img_name:
+  tag = datetime.now().strftime("%Y%m%d-%H%M%S")
+  new_img_name += ':'+tag
 
 dist_docker_path = os.path.abspath(__file__).split('/')[:-1]  
 dist_docker_path = '/'.join(dist_docker_path) + '/'  
