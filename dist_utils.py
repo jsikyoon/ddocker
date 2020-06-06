@@ -162,6 +162,7 @@ def summary():
       for _gpu_idx in range(sum_workers[i]['gpu']['total_num']):
         if '/dev/nvidia'+str(_gpu_idx) in _PathOnHost:
           gpu_models.append(sum_workers[i]['gpu']['models'][_gpu_idx])
+          sum_workers[i]['gpu']['gpu_usage'][_gpu_idx] = _sum_containers['name']
       if len(gpu_models) == 0:
         _sum_containers['GPUS'] = ''
       else:
