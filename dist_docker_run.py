@@ -27,7 +27,7 @@ for _gpu_id in gpu_ids.split(','):
 command += '-e NVIDIA_VISIBLE_DEVICES='+gpu_ids+' '
 command += '--memory='+mem+' '
 command += '--cpus='+cpus+' '
-command += '-ti --name '+cont_name+' '
+command += '--name '+cont_name+' '
 command += img_name
 command += ' /bin/bash -c "source ~/.bashrc; eval $(conda shell.bash hook) ;'
 command += ' conda activate '+env_name+' ; '
