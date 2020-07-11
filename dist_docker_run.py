@@ -18,7 +18,7 @@ volumn_options="-v /data/local/jy651/:/data/local/jy651 -v /cortex/users/jy651:/
 ###############################################################################
 # Run
 ###############################################################################
-command = 'docker run '
+command = 'docker run -d '
 command += volumn_options
 command += \
     '--device=/dev/nvidiactl --device=/dev/nvidia-uvm --runtime nvidia '
